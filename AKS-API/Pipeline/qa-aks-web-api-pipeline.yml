@@ -17,7 +17,7 @@ schedules:
   displayName: Mon-Fri build at 8pm
   branches:
     include:
-    - FF_QA_WebApps_Release
+    - WeatherForcast
 
   always: true
 # no PR triggers
@@ -26,10 +26,6 @@ trigger: none
 pool:
   vmImage: 'ubuntu-latest'
 
-variables:
-  - group: 'QA-Variables'
-  - name: 'deploymentManifestPath'
-    value: 'Deployment\ Scripts/Kubernetes/qa-fieldforce-webapi.yaml' 
 
 stages:
 - stage: Build
