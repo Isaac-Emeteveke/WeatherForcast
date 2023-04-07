@@ -70,46 +70,35 @@ stages:
               $(Build.BuildId)
               latest
  
-# - stage: Deploy
-#   jobs:
-#     - deployment: QA_WebAPI
-#       displayName: 'Deploy Web API to QA environment'
-#       environment: 'Product-QA'
-#       strategy:
-#         runOnce:
-#           deploy:
-#             steps:
-#               - checkout: self
+- stage: Deploy
+  jobs:
+    - deployment: QA_WebAPI
+      displayName: 'Deploy Web API to QA environment'
+      environment: 'Product-QA'
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - checkout: self
 
-#               - task: AzureCLI@2
-#                 displayName: 'Add Client ID for managed identity in deployment manifest'
-#                 inputs:
-#                   azureSubscription: 'Azure DevTest subscription 1(eb68c7f5-b517-49e4-9271-')'
-#                   scriptType: 'bash'
-#                   scriptLocation: 'inlineScript'
-#                   inlineScript: |
-#                     CLIENT_ID=$(az identity show --name qa-apps-cluster-agentpool --resource-group MC_FieldForce-QA-RG_qa-apps-cluster_eastus --query clientId)
-                    
-#                     sed -i "s/<insert-managed-identity-client-id-here>/$CLIENT_ID/g" ${{ variables.deploymentManifestPath }}
-
-#               - task: Kubernetes@1
-#                 displayName: 'Apply deployment manifest (creates new if not exists)'
-#                 inputs:
-#                   connectionType: 'Kubernetes Service Connection'
-#                   kubernetesServiceEndpoint: 'QA K8s cluster (4k)'
-#                   command: 'apply'
-#                   arguments: '-f "${{ variables.deploymentManifestPath }}"'
-#                   secretType: 'dockerRegistry'
-#                   containerRegistryType: 'Azure Container Registry'
-#                   versionSpec: '1.24.6'
+              - task: Kubernetes@1
+                displayName: 'Apply deployment manifest (creates new if not exists)'
+                inputs:
+                  connectionType: 'Kubernetes Service Connection'
+                  kubernetesServiceEndpoint: 'kubernetes cluster'
+                  command: 'apply'
+                  arguments: '-f AKS-API/ManifesrFiles/qa-webapi.yaml'
+                  secretType: 'dockerRegistry'
+                  containerRegistryType: 'Azure Container Registry'
+                  versionSpec: '1.24.6'
               
-#               - task: Kubernetes@1
-#                 displayName: 'Set latest image for the above deployment'
-#                 inputs:
-#                   connectionType: 'Kubernetes Service Connection'
-#                   kubernetesServiceEndpoint: 'QA K8s cluster (4k)'
-#                   command: 'set'
-#                   arguments: 'image deployment.apps/qa-fieldforce-webapi fieldforce-webapi=imga.azurecr.io/fieldforce-webapi:$(Build.BuildId)'
-#                   secretType: 'dockerRegistry'
-#                   containerRegistryType: 'Azure Container Registry'
-#                   versionSpec: '1.24.6'
+              - task: Kubernetes@1
+                displayName: 'Set latest image for the above deployment'
+                inputs:
+                  connectionType: 'Kubernetes Service Connection'
+                  kubernetesServiceEndpoint: 'kubernetes cluster'
+                  command: 'set'
+                  arguments: 'image deployment.apps/qa-fieldforce-webapi ff-webapi=itestdevacr.azurecr.io/qa-webapi:$(Build.BuildId)'
+                  secretType: 'dockerRegistry'
+                  containerRegistryType: 'Azure Container Registry'
+                  versionSpec: '1.24.6'
