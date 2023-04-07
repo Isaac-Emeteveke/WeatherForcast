@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "yLXfGI+iwbBVMq1sKnywEEsKLUEkosxwFNTKVkz1Xc0=",
+  "Source": "AKS-API",
+  "BasePath": "_content/AKS-API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qa-ff-webapi
+  labels:
+    app: ff-webapi
+    environment: qa
+spec:
+  template: 
+    metadata:
+      name: ff-webapi-pod
+      labels:
+        app: ff-webapi
+        environment: qa
+    spec:
+      containers:
+        - name: ff-webapi
+          image: testdevacr.azurecr.io/aks:latest
+          env:
+            - name: AZURE_CLIENT_ID
+              # Go to Azure portal > Managed Identities, copy Client ID and paste here
+              value: <insert-managed-identity-client-id-here>
+          ports:
+          - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /weatherforecast
+              port: 80
+            periodSeconds: 60
+            timeoutSeconds: 1
+          #volumeMounts:
+          #  - name: azure-fileshare
+          #    mountPath: /app/logs
+ 
+  replicas: 1
+  selector:
+    matchLabels: 
+      app: ff-webapi
+      environment: qa
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qa-ff-webapi
+spec:
+  selector: 
+    app: ff-webapi
+  ports: 
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP

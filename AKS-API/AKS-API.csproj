@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>AKS_API</RootNamespace>
+    <UserSecretsId>09c7f18a-5175-465b-83b6-c93b7e7512a4</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="logs\" />
+    <Folder Include="Pipeline\" />
+  </ItemGroup>
+
+</Project>

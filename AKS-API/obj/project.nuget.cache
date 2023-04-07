@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "AyBHx7R0uQSLGNP/O0XFqJswTrhcHyT74Yw4zlAkMQt9PMEn9Fcn2b0YvH503nVfuxFYZiMe+BCwlOIdJpjGsg==",
+  "success": false,
+  "projectFilePath": "C:\\Users\\Isaac\\source\\repos\\AKS-API\\AKS-API\\AKS-API.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "message": "Unable to find package Microsoft.VisualStudio.Azure.Containers.Tools.Targets. No packages exist with this id in source(s): Microsoft Visual Studio Offline Packages",
+      "libraryId": "Microsoft.VisualStudio.Azure.Containers.Tools.Targets",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
+}
